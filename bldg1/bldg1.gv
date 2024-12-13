@@ -1,0 +1,67 @@
+graph {
+    graph [ layout="neato" splines=ortho ];
+    node [ shape="box" label="" xlabel="\N" fontsize="11.0" fontname="NotoSans" ];
+
+    // managed switches
+    node [ width="0.45" height="0.3" style="filled" fillcolor="PaleGreen1" ];
+    ASW_3F [ pos="3.0,6.7!" ];
+    ASW_2F [ pos="3.0,4.7!" ];
+    ASW_1F [ pos="3.0,2.7!" ];
+    ASW_BF [ pos="4.5,1.3!" ];
+    DSW   [ pos="1.7,4.7!" fillcolor="MediumPurple3" ];
+    
+    // hubs
+    node [ width="0.3" height="0.45" style="filled" fillcolor="lightgray" ];
+    hub_2Fa [ pos="4.5,4.7!" label="24p" ];
+    hub_2Fb [ pos="5.2,5.2!" label="16p" width="0.3" height="0.2" ];
+    hub_1Fa [ pos="4.5,2.7!" label="24p" ];
+    hub_1Fb [ pos="5.2,2.7!" label="24p" ];
+    ceiling_hub_a [ pos="8.5,5.5!" width="0.45" height="0.25" ];
+    ceiling_hub_b [ pos="8.5,3.5!" width="0.45" height="0.25" ];
+
+    // other devices
+    node [ width="0.3" height="0.3" style="filled" fillcolor="white" ];
+    printer_a [ pos="8.5,4.7!" ];
+    printer_b [ pos="9.8,4.7!" ];
+    printer_c [ pos="9.2,2.7!" ];
+    
+    // further points
+    node [ style="" ];
+    to_serverroom [ shape="plain" pos="0.8,4.7!" label="≈" ];
+    to_further_2Fa [ shape="plain" pos="7.0,5.5!" label="≈" xlabel="" ];
+    to_further_2Fb [ shape="plain" pos="9.2,5.5!" label="≈" xlabel="" ];
+    to_further_1F [ shape="plain" pos="7.0,3.5!" label="≈" xlabel="" ];
+    to_sameroom [ shape="plain" pos="5.5,4.3!" label="≈" ];
+
+    // waypoints
+    // (changing width to larger like 0.1 will show waypoint locations)
+    node [ shape="point" xlabel="" width="0.001" fillcolor="black" ];
+    waypoint_2F_hub_a_above [ pos="4.5,5.6!" ];
+    waypoint_2F_hub_b_right [ pos="5.3,5.5!" ];
+    waypoint_2F_hub_b_below [ pos="5.2,4.3!" ];
+    waypoint_1F_hub_a [ pos="4.5,3.2!" ];
+    waypoint_1F_hub_b [ pos="5.2,3.5!" ];
+    waypoint_1F_2F [ pos="5.1,5.5!" ];
+    waypoint_2F_farright [ pos="9.8,5.5!" ];
+
+    // LAN cables
+    edge [ color="lightblue" penwidth="2" ];
+    ASW_2F -- waypoint_2F_hub_a_above -- hub_2Fa;
+    ASW_1F -- waypoint_1F_hub_a -- hub_1Fa;
+    hub_1Fa -- hub_1Fb;
+    edge [ color="red2" penwidth="1.5" ];
+    hub_1Fb -- waypoint_1F_2F -- hub_2Fb;
+    hub_2Fb -- waypoint_2F_hub_b_below -- to_sameroom;
+    hub_2Fb -- waypoint_2F_hub_b_right -- to_further_2Fa -- ceiling_hub_a;
+    ceiling_hub_a -- printer_a;
+    ceiling_hub_a -- to_further_2Fb -- waypoint_2F_farright -- printer_b;
+    hub_1Fb -- waypoint_1F_hub_b -- to_further_1F -- ceiling_hub_b -- printer_c;
+    
+    // Fibers
+    edge [ color="orange" penwidth="2" ];
+    ASW_3F -- DSW;
+    ASW_2F -- DSW;
+    ASW_1F -- DSW;
+    ASW_BF -- DSW;
+    DSW -- to_serverroom [ color="yellow2" ];
+}
